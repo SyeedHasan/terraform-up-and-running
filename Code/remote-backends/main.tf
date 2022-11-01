@@ -2,15 +2,25 @@ provider "aws" {
     region = "us-east-1"
 }
 
-terraform {
-    backend "s3" {
-        # Specify the backend configuration variables here
-        # OR,
-        # Read them from a configuration while during the init command
-        #   terraform init -backend-config=backend-config.hcl 
-        key = "defaultworkspace/terraform.tfstate"
-    }
-}
+# Though the default backend,
+#   Changing backends require explciit redefinition
+#   Or perhaps reconfiguring while `init` using `terraform init -reconfigure`
+# terraform {
+#     backend "local" {
+#         path = "/Users/syedhassanakhtar/Learning/Terraform/terraform-up-and-running-code/Code/remote-backends/terraform.tfstate"
+#     }
+# }
+
+# Setting up remote backends
+# terraform {
+#     backend "s3" {
+#         # Specify the backend configuration variables here
+#         # OR,
+#         # Read them from a configuration while during the init command
+#         #   terraform init -backend-config=backend-config.hcl 
+#         key = "defaultworkspace/terraform.tfstate"
+#     }
+# }
 
 resource "aws_s3_bucket" "backendBucket" {
     bucket = "abuckettostoretheterraformstatein"
